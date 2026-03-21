@@ -1,0 +1,46 @@
+---
+title: Hello World & Next.js 15
+date: 2024-03-10
+category: 开发与技术
+tags: [React, TypeScript, Next.js]
+summary: 这是一篇测试文章，用来验证基础的 Markdown 和 MDX 特性，包含代码高亮。
+featured: true
+---
+
+# 欢迎来到我的博客
+
+你好，这是第一篇文章，主要测试项目初始化情况。
+
+## 开发技术栈
+
+我们使用了一些很棒的新技术来搭建这套博客皮肤：
+- **Next.js 15** (App Router 模式)
+- **Tailwind CSS v4** (快速实现设计稿和 Dark Mode)
+- **Supabase** (强大的 Postgres 后端及 Realtime 订阅)
+- **Shiki & Rehype** (在构建时进行优质代码高亮)
+
+## 代码高亮测试
+
+来看看 Next.js 中的 `page.tsx` 代码块是否正确被语法高亮。
+
+```tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog Post',
+}
+
+export default function Page() {
+  return <div>Hello world!</div>
+}
+```
+
+## 客户端交互
+
+你可以通过往下滚动鼠标来看看顶部是不是有一个蓝色的进度条（ReadingProgress）。
+
+### 评论区
+
+拉到底部，尝试一下使用 Supabase 制作的实时评论系统吧！只要连接配置正确，你应该可以马上收到自己提交的评论。
+
+> 感谢你的访问！
