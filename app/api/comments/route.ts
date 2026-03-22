@@ -1,45 +1,36 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { getComments, addComment } from "@/lib/supabase";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const post_slug = searchParams.get("post_slug");
+  const slug = searchParams.get("slug");
 
-  if (!post_slug) {
-    return NextResponse.json({ error: "Missing post_slug" }, { status: 400 });
+  if (!slug) {
+    return NextResponse.json({ error: "缺少必填参数 slug" }, { status: 400 });
   }
 
-  const { data, error } = await supabase
-    .from("comments")
-    .select("*")
-    .eq("post_slug", post_slug)
-    .order("created_at", { ascending: false });
-
-  if (error) {
+  try {
+    const comments = await getComments(slug);
+    return NextResponse.json(comments);
+  } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-
-  return NextResponse.json(data || []);
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { post_slug, author_name, content } = body;
+    const { slug, author_name, content } = body;
 
-    if (!post_slug || !author_name || !content) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    if (!slug || !author_name || !content) {
+      return NextResponse.json({ error: "缺少必填字段: slug, author_name, content" }, { status: 400 });
     }
 
-    const { data, error } = await supabase
-      .from("comments")
-      .insert([{ post_slug, author_name, content }])
-      .select();
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    if (author_name.trim() === "" || content.trim() === "") {
+      return NextResponse.json({ error: "昵称和内容不能为空" }, { status: 400 });
     }
 
+    const data = await addComment(slug, author_name.trim(), content.trim());
     return NextResponse.json(data);
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

@@ -55,10 +55,10 @@ export function TableOfContents() {
           >
             <a 
               href={`#${heading.id}`}
-              className={`block transition-colors ${
+              className={`block py-1 pl-3 border-l-2 transition-all duration-200 ${
                 activeId === heading.id 
-                  ? "text-blue-600 dark:text-blue-500 font-medium" 
-                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                  ? "border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 font-medium" 
+                  : "border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-700 hover:text-gray-900 dark:hover:text-gray-200"
               }`}
             >
               {heading.text}
