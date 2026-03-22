@@ -35,10 +35,17 @@
 }
 
 .dark {
-  --bg:           #0c0c0c;
-  --bg-subtle:    #141414;
+  --background: #0d0d0d;
+  --foreground: #f1f1f1;
+  --card: #121212;
+  --card-foreground: #f1f1f1;
+  --popover: #121212;
+  --popover-foreground: #f1f1f1;
+  --primary: #f1f1f1;
+  --bg:           var(--background);
+  --bg-subtle:    var(--card);
   --bg-hover:     #1c1c1c;
-  --fg:           #f0f0ec;
+  --fg:           var(--foreground);
   --fg-muted:     #9ca3af;
   --fg-subtle:    #6b7280;
   --accent:       #60a5fa;

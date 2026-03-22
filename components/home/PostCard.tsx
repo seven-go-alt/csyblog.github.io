@@ -1,36 +1,66 @@
-import Link from 'next/link';
-import { Post } from '@/types';
-import { CategoryBadge } from '@/components/ui/CategoryBadge';
+import Link from "next/link";
+import Image from "next/image";
+import { Post } from "@/types";
+import { Calendar, Clock, FolderOpen } from "lucide-react";
 
-export function PostCard({ post, index, isLast }: { post: Post, index?: number, isLast?: boolean }) {
-  const summaryText = post.frontmatter.summary || (post.content ? post.content.replace(/(<([^>]+)>)|[#*`_\[\]()]/gi, '').slice(0, 80) + '...' : '');
+interface PostCardProps {
+  post: Post;
+  index: number;
+}
+
+export function PostCard({ post, index }: PostCardProps) {
+  const isEven = index % 2 === 0;
+
+  // Placeholder logic since original posts might not have an image
+  const imageUrl = "https://images.unsplash.com/photo-1618477247222-accd0fac2af9?q=80&w=800&auto=format&fit=crop";
 
   return (
-    <Link href={`/blog/${post.slug}`} className={`block p-8 md:p-10 group flex flex-col relative overflow-hidden bg-transparent rounded-none min-h-[200px] border-b md:border-b-0 ${!isLast ? 'md:border-r border-gray-200 dark:border-gray-800' : ''}`}>
-      {/* Animated Left Border */}
-      <div className="absolute top-0 left-0 bottom-0 w-[2px] bg-blue-500 scale-y-0 origin-top group-hover:scale-y-100 transition-transform duration-200 ease-out" />
-      
-      <div className="flex items-start justify-between mb-8">
-        <CategoryBadge category={post.frontmatter.category || "Article"} />
-        {index !== undefined && (
-          <span className="font-serif text-[28px] leading-none font-light text-gray-300 dark:text-gray-700 group-hover:text-gray-900 dark:group-hover:text-white transition-colors italic">
-            {String(index + 1).padStart(2, '0')}
+    <article className={`group flex flex-col md:flex-row bg-white dark:bg-[#121212] rounded-xl shadow-[0_3px_8px_6px_rgba(7,17,27,0.05)] overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(7,17,27,0.08)] ${!isEven ? 'md:flex-row-reverse' : ''}`}>
+      {/* Image Half */}
+      <Link href={`/blog/${post.slug}`} className="relative w-full md:w-1/2 h-64 md:h-auto overflow-hidden">
+        <Image 
+          src={imageUrl}
+          alt={post.frontmatter.title}
+          fill
+          className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+      </Link>
+
+      {/* Content Half */}
+      <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center">
+        {/* Meta Top */}
+        <div className="flex items-center gap-4 text-xs text-fg-muted mb-4 uppercase tracking-wider">
+          <span className="flex items-center gap-1">
+            <Calendar className="w-3.5 h-3.5" />
+            {new Date(post.frontmatter.date).toLocaleDateString("zh-CN", { month: "short", day: "numeric", year: "numeric" })}
           </span>
-        )}
+          {post.frontmatter.category && (
+            <span className="flex items-center gap-1 text-accent">
+              <FolderOpen className="w-3.5 h-3.5" />
+              {post.frontmatter.category}
+            </span>
+          )}
+        </div>
+
+        {/* Title */}
+        <Link href={`/blog/${post.slug}`} className="group-hover:text-accent transition-colors">
+          <h2 className="text-2xl md:text-3xl font-bold text-fg mb-4 leading-tight line-clamp-2">
+            {post.frontmatter.title}
+          </h2>
+        </Link>
+
+        {/* Excerpt */}
+        <p className="text-fg-subtle line-clamp-3 leading-relaxed mb-6 flex-grow">
+          {post.frontmatter.summary || (post.content ? post.content.substring(0, 150).replace(/[#*`_\]\[-]/g, "") + "..." : "")}
+        </p>
+
+        {/* Meta Bottom */}
+        <div className="flex items-center gap-2 text-xs text-fg-muted mt-auto pt-4 border-t border-border/50">
+          <Clock className="w-3.5 h-3.5" />
+          <span>阅读约 3 分钟</span>
+        </div>
       </div>
-      <h3 className="text-xl md:text-2xl font-serif font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-[1.35] mb-4">
-        {post.frontmatter.title}
-      </h3>
-      <p className="text-gray-500 dark:text-gray-400 text-[13px] leading-relaxed mb-8 flex-1">
-        {summaryText}
-      </p>
-      <div className="text-[10px] font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest mt-auto border-t border-gray-100 dark:border-gray-800/60 pt-5">
-        <time dateTime={post.frontmatter.date}>
-          {new Date(post.frontmatter.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-        </time>
-        <span className="mx-3 text-gray-300 dark:text-gray-700">•</span>
-        <span>{summaryText.length > 80 ? "4 MIN READ" : "2 MIN READ"}</span>
-      </div>
-    </Link>
+    </article>
   );
 }
