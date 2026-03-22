@@ -2,28 +2,32 @@ import Link from 'next/link';
 import { Post } from '@/types';
 
 export function StripList({ posts }: { posts: Post[] }) {
-  if (!posts || posts.length === 0) return null;
   return (
-    <div className="editorial-grid sm:grid-cols-2 border border-gray-200 dark:border-gray-800 animate-entrance delay-200">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-gray-200 dark:border-gray-800 animate-entrance delay-300 rounded-none bg-transparent">
       {posts.map((post, idx) => (
-        <Link key={post.slug} href={`/blog/${post.slug}`} className={`editorial-cell block p-8 group relative overflow-hidden ${(idx === 0 || idx === 1) && 'border-b'} border-gray-200 dark:border-gray-800`}>
-          {/* Large decorative number */}
-          <span className="absolute -bottom-6 -right-2 text-[10rem] leading-none font-serif font-bold text-gray-50 dark:text-[#111] pointer-events-none select-none transition-transform duration-700 group-hover:-translate-y-4 group-hover:scale-110">
+        <Link 
+          key={post.slug} 
+          href={`/blog/${post.slug}`} 
+          className={`group relative p-6 md:p-8 flex flex-col justify-between min-h-[160px] overflow-hidden bg-transparent rounded-none border-b md:border-b-0 ${idx < posts.length - 1 ? 'md:border-r border-gray-200 dark:border-gray-800' : ''}`}
+        >
+          {/* Faint Background Number */}
+          <span className="absolute right-[16px] bottom-[8px] text-[80px] font-serif italic font-light text-gray-100 dark:text-gray-800/50 leading-none z-0 pointer-events-none select-none">
             {idx + 1}
           </span>
           
-          <div className="relative z-10 h-full flex flex-col justify-between min-h-[160px]">
-             <div>
-               <span className="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-500 mb-4 block">
-                 {post.frontmatter.category || "Essays"}
-               </span>
-               <h3 className="text-2xl font-serif font-bold text-gray-900 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug mb-4 max-w-[90%]">
-                 {post.frontmatter.title}
-               </h3>
-             </div>
-             <time dateTime={post.frontmatter.date} className="text-xs font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest">
-               {new Date(post.frontmatter.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-             </time>
+          <div className="relative z-10 flex flex-col h-full">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3 block">
+              {post.frontmatter.category || "Thought"}
+            </span>
+            <h3 className="text-[16px] font-serif font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-[1.4] mb-4">
+              {post.frontmatter.title}
+            </h3>
+            
+            <span className="text-[10px] font-mono text-gray-400 dark:text-gray-500 uppercase tracking-[0.1em] mt-auto">
+              <time dateTime={post.frontmatter.date}>
+                {new Date(post.frontmatter.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+              </time>
+            </span>
           </div>
         </Link>
       ))}

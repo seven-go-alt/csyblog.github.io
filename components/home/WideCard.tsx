@@ -1,51 +1,58 @@
 import Link from 'next/link';
 import { Post } from '@/types';
-import { ArrowRight } from 'lucide-react';
+import { CategoryBadge } from '@/components/ui/CategoryBadge';
 
 export function WideCard({ post, related }: { post: Post, related: Post[] }) {
-  if (!post) return null;
   return (
-    <div className="editorial-grid md:grid-cols-2 border border-gray-200 dark:border-gray-800 mb-16 animate-entrance delay-200">
-      <div className="editorial-cell p-8 md:p-12 flex flex-col justify-center bg-white dark:bg-[#0f0f0f]">
-        <span className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 mb-5 block">
-          In-Depth Long Read
+    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] border border-gray-200 dark:border-gray-800 animate-entrance delay-200 bg-transparent rounded-none">
+      {/* Main Long Read */}
+      <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-800 flex flex-col bg-transparent">
+        <span className="text-[10px] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400 mb-6 block font-normal">
+          IN-DEPTH LONG READ
         </span>
-        <h3 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-gray-100 leading-[1.15] mb-5">
-          {post.frontmatter.title}
-        </h3>
-        <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">
-          {post.frontmatter.summary}
-        </p>
-        <Link href={`/blog/${post.slug}`} className="inline-flex items-center gap-2 font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors w-fit group text-sm uppercase tracking-widest">
-          <span className="border-b border-transparent group-hover:border-current pb-0.5 transition-colors">Read Full Article</span>
-          <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+        <Link href={`/blog/${post.slug}`} className="block group mb-6">
+          <h3 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight mb-4">
+            {post.frontmatter.title}
+          </h3>
+          <p className="text-lg text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-3">
+            {post.frontmatter.summary}
+          </p>
         </Link>
+        
+        <div className="mt-auto pt-6 border-t border-gray-100 dark:border-gray-800/60 flex items-center justify-between">
+          <CategoryBadge category={post.frontmatter.category || "Long Read"} />
+          <div className="flex items-center gap-3 text-[10px] font-mono text-gray-400 uppercase tracking-widest">
+            <time dateTime={post.frontmatter.date}>
+              {new Date(post.frontmatter.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+            </time>
+            <span>•</span>
+            <span>15 MIN READ</span>
+          </div>
+        </div>
       </div>
-      
-      <div className="editorial-cell bg-gray-50 dark:bg-[#0a0a0a] p-8 md:p-12 border-t md:border-t-0 md:border-l border-gray-200 dark:border-gray-800 relative">
-        <h4 className="font-sans text-xs font-bold uppercase tracking-widest text-gray-900 dark:text-gray-100 mb-8 flex items-center gap-2">
-          <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-          Related Series
+
+      {/* Related Series */}
+      <div className="p-8 md:p-10 flex flex-col justify-center bg-transparent">
+        <h4 className="text-[10px] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400 mb-8 font-normal">
+          RELATED SERIES
         </h4>
-        <ul className="space-y-8 relative z-10">
-          {related.map((rel, idx) => (
-            <li key={rel.slug} className="group cursor-pointer">
-              <Link href={`/blog/${rel.slug}`} className="block">
-                <div className="flex items-start gap-5">
-                  <span className="font-serif text-gray-300 dark:text-gray-700 text-2xl font-light italic">{(idx + 1).toString().padStart(2, '0')}</span>
-                  <div>
-                    <h5 className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-lg mb-2 leading-snug">
-                      {rel.frontmatter.title}
-                    </h5>
-                    <time dateTime={rel.frontmatter.date} className="text-xs text-gray-500 font-mono uppercase tracking-wider">
-                       {new Date(rel.frontmatter.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-                    </time>
-                  </div>
-                </div>
-              </Link>
-            </li>
+        <div className="space-y-6">
+          {related.slice(0, 3).map((item, idx) => (
+            <Link key={item.slug} href={`/blog/${item.slug}`} className="flex items-start gap-4 group">
+              <span className="font-serif text-[18px] italic text-gray-400 dark:text-gray-600 group-hover:text-blue-500 transition-colors mt-0.5">
+                {(idx + 1).toString().padStart(2, '0')}
+              </span>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-mono text-gray-400 dark:text-gray-500 uppercase tracking-[0.1em] mb-1">
+                  {new Date(item.frontmatter.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                </span>
+                <span className="text-[14px] font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors leading-relaxed line-clamp-2">
+                  {item.frontmatter.title}
+                </span>
+              </div>
+            </Link>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
