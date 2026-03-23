@@ -5,6 +5,7 @@ export interface PostFrontmatter {
   tags: string[];
   summary: string;
   featured?: boolean;
+  coverImage?: string;
 }
 
 export interface Post {

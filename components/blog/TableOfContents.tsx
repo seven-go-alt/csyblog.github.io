@@ -15,17 +15,27 @@ export function TableOfContents() {
     // Select h2 and h3 elements strictly within the article content.
     const elements = Array.from(document.querySelectorAll(".mdx-content h2, .mdx-content h3"));
     
-    const items = elements.map((elem) => {
-      // Add ids if missing so we can anchor jump
-      if (!elem.id) {
-        elem.id = elem.textContent?.toLowerCase().replace(/\s+/g, '-') || Math.random().toString(36).substring(2, 9);
-      }
-      return {
-        id: elem.id,
-        text: elem.textContent || "",
-        level: Number(elem.tagName.substring(1))
-      };
-    });
+    const items = elements
+      .filter((elem) => {
+        // Skip headings that are hidden (e.g. YAML frontmatter hidden via CSS)
+        const style = window.getComputedStyle(elem);
+        if (style.display === 'none' || style.visibility === 'hidden') return false;
+        // Skip headings that look like raw YAML frontmatter text
+        const text = elem.textContent || '';
+        if (text.includes('title:') && text.includes('date:')) return false;
+        return true;
+      })
+      .map((elem) => {
+        // Add ids if missing so we can anchor jump
+        if (!elem.id) {
+          elem.id = elem.textContent?.toLowerCase().replace(/\s+/g, '-') || Math.random().toString(36).substring(2, 9);
+        }
+        return {
+          id: elem.id,
+          text: elem.textContent || "",
+          level: Number(elem.tagName.substring(1))
+        };
+      });
     
     setHeadings(items);
 

@@ -127,6 +127,17 @@ function StarryBackground() {
 }
 
 function Meteors() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    // Wait for next frame to ensure elements are painted with base styles first
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setReady(true);
+      });
+    });
+  }, []);
+
   const meteors = [
     { id: 1, top: '10%', left: '80%', delay: '0s', duration: '5s' },
     { id: 2, top: '-10%', left: '50%', delay: '2s', duration: '4.5s' },
@@ -149,6 +160,8 @@ function Meteors() {
           height: 2px;
           background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
           border-radius: 999px;
+          transform: rotate(215deg);
+          opacity: 0;
         }
         .meteor-tail::before {
           content: '';
@@ -169,8 +182,10 @@ function Meteors() {
           style={{ 
             top: m.top, 
             left: m.left, 
-            animation: `meteor-shower ${m.duration} linear infinite`,
-            animationDelay: m.delay
+            ...(ready ? {
+              animation: `meteor-shower ${m.duration} linear infinite`,
+              animationDelay: m.delay,
+            } : {})
           }} 
         />
       ))}

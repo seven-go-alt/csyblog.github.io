@@ -11,8 +11,8 @@ interface PostCardProps {
 export function PostCard({ post, index }: PostCardProps) {
   const isEven = index % 2 === 0;
 
-  // Placeholder logic since original posts might not have an image
-  const imageUrl = "https://images.unsplash.com/photo-1618477247222-accd0fac2af9?q=80&w=800&auto=format&fit=crop";
+  // Use the actual frontmatter coverImage or fallback softly
+  const imageUrl = post.frontmatter.coverImage || "https://images.unsplash.com/photo-1618477247222-accd0fac2af9?q=80&w=800&auto=format&fit=crop";
 
   return (
     <article className={`group flex flex-col md:flex-row bg-white dark:bg-[#121212] rounded-xl shadow-[0_3px_8px_6px_rgba(7,17,27,0.05)] overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(7,17,27,0.08)] ${!isEven ? 'md:flex-row-reverse' : ''}`}>
