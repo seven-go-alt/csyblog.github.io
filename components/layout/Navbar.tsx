@@ -32,9 +32,11 @@ export function Navbar() {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // On blog post detail pages, the hero has a dark background so navbar needs light text
+  // Pages with dark hero backgrounds need light navbar text
   const isBlogPost = pathname.startsWith("/blog/") && pathname !== "/blog";
-  const useLightText = isBlogPost && !isScrolled;
+  const isHomepage = pathname === "/";
+  const hasDarkHero = isBlogPost || isHomepage;
+  const useLightText = hasDarkHero && !isScrolled;
 
   return (
     <>
