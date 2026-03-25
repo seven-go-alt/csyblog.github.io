@@ -32,6 +32,10 @@ export function Navbar() {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  // On blog post detail pages, the hero has a dark background so navbar needs light text
+  const isBlogPost = pathname.startsWith("/blog/") && pathname !== "/blog";
+  const useLightText = isBlogPost && !isScrolled;
+
   return (
     <>
       <header 
@@ -40,25 +44,33 @@ export function Navbar() {
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between max-w-5xl">
-          <Link href="/" className="font-serif font-bold text-2xl tracking-tight text-gray-900 dark:text-gray-100 hover:opacity-80 transition-opacity">
-            CSY<span className="text-blue-600 dark:text-blue-500">.</span>
+          <Link href="/" className={`font-serif font-bold text-2xl tracking-tight transition-colors hover:opacity-80 ${
+            useLightText ? "text-white" : "text-gray-900 dark:text-gray-100"
+          }`}>
+            CSY<span className="text-blue-400 dark:text-blue-500">.</span>
           </Link>
           
           <div className="flex items-center gap-2 sm:gap-6">
-            <nav className="hidden sm:flex items-center gap-6 text-sm font-medium text-gray-600 dark:text-gray-400">
+            <nav className={`hidden sm:flex items-center gap-6 text-sm font-medium transition-colors ${
+              useLightText ? "text-white/70" : "text-gray-600 dark:text-gray-400"
+            }`}>
               {NAV_LINKS.map((link) => {
                 const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
                 return (
                   <Link 
                     key={link.href} 
                     href={link.href} 
-                    className={`relative py-1 transition-colors ${isActive ? "text-gray-900 dark:text-gray-100" : "hover:text-blue-600 dark:hover:text-blue-500"}`}
+                    className={`relative py-1 transition-colors ${
+                      isActive 
+                        ? (useLightText ? "text-white" : "text-gray-900 dark:text-gray-100")
+                        : (useLightText ? "hover:text-white" : "hover:text-blue-600 dark:hover:text-blue-500")
+                    }`}
                   >
                     {link.label}
                     {isActive && (
                       <motion.div
                         layoutId="navbar-indicator"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-500"
+                        className={`absolute bottom-0 left-0 right-0 h-0.5 ${useLightText ? "bg-white" : "bg-blue-600 dark:bg-blue-500"}`}
                         transition={{ type: "spring", bounce: 0.25, stiffness: 130, damping: 15 }}
                       />
                     )}
@@ -67,11 +79,15 @@ export function Navbar() {
               })}
             </nav>
             
-            <div className="flex items-center gap-2 border-l border-transparent sm:border-gray-200 dark:sm:border-gray-800 sm:pl-6 transition-colors">
+            <div className={`flex items-center gap-2 border-l border-transparent sm:pl-6 transition-colors ${
+              useLightText ? "sm:border-white/20" : "sm:border-gray-200 dark:sm:border-gray-800"
+            }`}>
               <ThemeToggle />
               <SearchModal />
               <button 
-                className="p-1.5 sm:hidden text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors"
+                className={`p-1.5 sm:hidden rounded-md transition-colors ${
+                  useLightText ? "text-white/70 hover:bg-white/10" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                }`}
                 onClick={() => setIsMobileMenuOpen(true)}
               >
                 <Menu className="w-5 h-5" />
