@@ -1,4 +1,19 @@
-export const metadata = { title: "关于" };
+import type { Metadata } from "next";
+
+const description = "关于 CSY：前端开发者，关注 AI、硬件与工程实践。";
+
+export const metadata: Metadata = {
+  title: "关于",
+  description,
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "关于",
+    description,
+    url: "/about",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "CSY Blog" }],
+  },
+};
 
 export default function AboutPage() {
   return (

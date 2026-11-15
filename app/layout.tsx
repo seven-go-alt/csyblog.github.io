@@ -38,11 +38,13 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     locale: "zh_CN",
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: SITE.name }],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE.name,
     description: SITE.description,
+    images: ["/og.png"],
   },
 };
 
@@ -53,6 +55,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
+      <head>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={SITE.name}
+          href="/feed.xml"
+        />
+      </head>
       <body
         className={`${sans.variable} ${mono.variable} ${serif.variable} font-sans antialiased min-h-screen flex flex-col`}
       >

@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { WangHero } from "@/components/home/WangHero";
 import { PostCard } from "@/components/home/PostCard";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { RibbonBackground } from "@/components/home/RibbonBackground";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   const posts = getAllPosts();

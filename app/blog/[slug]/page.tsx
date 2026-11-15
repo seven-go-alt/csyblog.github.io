@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import type { Metadata } from "next";
 import { getPostBySlug, getAllPosts } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import { Tag } from "@/components/ui/Tag";
+import { postJsonLd, serializeJsonLd } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -13,22 +15,36 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) return { title: "文章未找到" };
-  
-  return { 
+
+  const description = post.frontmatter.summary || `在 CSY Blog 阅读《${post.frontmatter.title}》。`;
+  const images = post.frontmatter.coverImage
+    ? [{ url: post.frontmatter.coverImage, alt: post.frontmatter.title }]
+    : undefined;
+
+  return {
     title: post.frontmatter.title,
-    description: post.frontmatter.summary || `在 CSY Blog 阅读《${post.frontmatter.title}》。`,
+    description,
+    alternates: { canonical: `/blog/${slug}` },
     openGraph: {
       title: post.frontmatter.title,
-      description: post.frontmatter.summary || `在 CSY Blog 阅读《${post.frontmatter.title}》。`,
+      description,
+      url: `/blog/${slug}`,
       type: 'article',
       publishedTime: post.frontmatter.date,
       tags: post.frontmatter.tags,
       authors: ["CSY"],
-    }
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.frontmatter.title,
+      description,
+      images: post.frontmatter.coverImage ? [post.frontmatter.coverImage] : undefined,
+    },
   };
 }
 
@@ -50,6 +66,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="w-full flex flex-col min-h-screen bg-bg">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(postJsonLd(post)) }}
+      />
       {/* Full Width Top Background Board */}
       <div className="relative w-full h-[50vh] min-h-[400px] flex items-end pb-12 overflow-hidden bg-gray-900 -mt-[64px]">
         {post.frontmatter.coverImage && (

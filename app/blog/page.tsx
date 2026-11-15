@@ -1,8 +1,22 @@
+import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { PostList } from "@/components/blog/PostList";
 import Link from "next/link";
 
-export const metadata = { title: "文章归档" };
+const description = "记录关于 AI、硬件与工程实践的思考。";
+
+export const metadata: Metadata = {
+  title: "文章归档",
+  description,
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "文章归档",
+    description,
+    url: "/blog",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "CSY Blog" }],
+  },
+};
 
 export default async function BlogPage({
   searchParams,
