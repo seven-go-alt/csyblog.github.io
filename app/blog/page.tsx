@@ -45,9 +45,9 @@ export default async function BlogPage({
       </header>
       
       <div className="flex flex-col md:flex-row gap-12">
-        <main className="flex-1">
+        <div className="flex-1">
           <PostList posts={posts} />
-        </main>
+        </div>
         
         <aside className="w-full md:w-64 shrink-0">
           <div className="sticky top-24">

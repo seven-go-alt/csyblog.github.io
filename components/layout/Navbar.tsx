@@ -7,6 +7,7 @@ import { SearchModal } from "@/components/ui/SearchModal";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { SearchItem } from "@/types";
 
 const NAV_LINKS = [
   { href: "/", label: "首页" },
@@ -14,7 +15,7 @@ const NAV_LINKS = [
   { href: "/about", label: "关于" },
 ];
 
-export function Navbar() {
+export function Navbar({ searchIndex }: { searchIndex: SearchItem[] }) {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -27,10 +28,22 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
+  // Lock background scroll and close on Escape while the mobile menu is open
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
+    if (!isMobileMenuOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isMobileMenuOpen]);
 
   // Pages with dark hero backgrounds need light navbar text
   const isBlogPost = pathname.startsWith("/blog/") && pathname !== "/blog";
@@ -85,12 +98,15 @@ export function Navbar() {
               useLightText ? "sm:border-white/20" : "sm:border-gray-200 dark:sm:border-gray-800"
             }`}>
               <ThemeToggle />
-              <SearchModal />
+              <SearchModal items={searchIndex} />
               <button 
                 className={`p-1.5 sm:hidden rounded-md transition-colors ${
                   useLightText ? "text-white/70 hover:bg-white/10" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
                 onClick={() => setIsMobileMenuOpen(true)}
+                aria-label="打开菜单"
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
               >
                 <Menu className="w-5 h-5" />
               </button>
@@ -106,6 +122,10 @@ export function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="导航菜单"
             className="fixed inset-0 z-50 bg-white dark:bg-[#0a0a0a] flex flex-col p-6 h-[100dvh]"
           >
             <div className="flex justify-between items-center mb-12">
@@ -115,6 +135,7 @@ export function Navbar() {
               <button 
                 className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="关闭菜单"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -132,6 +153,7 @@ export function Navbar() {
                   >
                     <Link 
                       href={link.href} 
+                      onClick={() => setIsMobileMenuOpen(false)}
                       className={`block py-2 ${isActive ? "text-blue-600 dark:text-blue-500 font-bold" : "text-gray-600 dark:text-gray-400"}`}
                     >
                       {link.label}

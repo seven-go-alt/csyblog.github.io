@@ -6,6 +6,7 @@ import { getPostBySlug, getAllPosts } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import { Tag } from "@/components/ui/Tag";
+import { ReadingProgress } from "@/components/ui/ReadingProgress";
 import { postJsonLd, serializeJsonLd } from "@/lib/seo";
 
 export async function generateStaticParams() {
@@ -66,6 +67,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="w-full flex flex-col min-h-screen bg-bg">
+      <ReadingProgress />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(postJsonLd(post)) }}
@@ -108,7 +110,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <div className="container mx-auto px-4 max-w-5xl py-12 flex justify-center">
         <div className="flex flex-col lg:flex-row gap-12 relative items-start w-full">
           {/* Main Reading Flow */}
-          <main className="flex-1 w-full min-w-0 flex flex-col items-center">
+          <div className="flex-1 w-full min-w-0 flex flex-col items-center">
             <div className="w-full max-w-[720px]">
               <article className="prose dark:prose-invert prose-blue max-w-none mdx-content w-full prose-headings:scroll-mt-24">
                 <PostContent />
@@ -134,7 +136,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 ) : <div />}
               </div>
             </div>
-          </main>
+          </div>
           
           <aside className="w-full lg:w-64 shrink-0 hidden lg:block sticky top-24">
             <TableOfContents />

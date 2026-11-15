@@ -179,25 +179,6 @@ body {
   }
 }
 
-/* =========================================
-   PHASE 5: EDITORIAL DESIGN SYSTEM
-   ========================================= */
-
-/* Editorial Animations */
-@keyframes editorialFadeUp {
-  0% { opacity: 0; transform: translateY(8px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-.animate-entrance {
-  animation: editorialFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
-}
-.delay-50 { animation-delay: 50ms; }
-.delay-100 { animation-delay: 100ms; }
-.delay-150 { animation-delay: 150ms; }
-.delay-200 { animation-delay: 200ms; }
-
 /* Category CSS Variables */
 :root {
   --cat-frontend-bg: var(--color-blue-50);
@@ -219,21 +200,4 @@ body {
   --cat-essay-text: var(--color-green-100);
   --cat-thought-bg: var(--color-purple-800);
   --cat-thought-text: var(--color-purple-100);
-}
-
-/* Editorial Grid Utilities */
-.editorial-grid {
-  display: grid;
-  gap: 1px;
-  background-color: var(--border);
-}
-.editorial-cell {
-  background-color: var(--background);
-  transition: background-color 150ms ease;
-}
-.editorial-cell:hover {
-  background-color: var(--bg-secondary);
-}
-.thick-divider {
-  border-bottom: 2px solid var(--foreground);
 }

@@ -20,11 +20,11 @@ export function Footer() {
         </div>
         
         <div className="flex items-center gap-5">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#333] dark:hover:text-white transition-colors p-2 -m-2">
+          <a href="https://github.com/caisiying" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#333] dark:hover:text-white transition-colors p-2 -m-2">
             <span className="sr-only">GitHub</span>
             <Github className="w-5 h-5" />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#1DA1F2] transition-colors p-2 -m-2">
+          <a href="https://twitter.com/csyblog" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#1DA1F2] transition-colors p-2 -m-2">
             <span className="sr-only">Twitter</span>
             <Twitter className="w-5 h-5" />
           </a>
@@ -36,7 +36,7 @@ export function Footer() {
           <button 
             onClick={scrollToTop}
             className="ml-4 p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 duration-300 transform hover:-translate-y-1 hover:shadow-md"
-            aria-label="Back to top"
+            aria-label="回到顶部"
           >
             <ArrowUp className="w-4 h-4" />
           </button>

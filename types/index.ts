@@ -13,3 +13,13 @@ export interface Post {
   frontmatter: PostFrontmatter;
   content: string;
 }
+
+/** Flattened post data used by the client-side search modal. */
+export interface SearchItem {
+  slug: string;
+  title: string;
+  summary: string;
+  category: string;
+  tags: string[];
+  date: string;
+}

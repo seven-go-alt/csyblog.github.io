@@ -5,8 +5,18 @@ import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { ReadingProgress } from "@/components/ui/ReadingProgress";
 import { SITE, getSiteUrl } from "@/lib/site";
+import { getAllPosts } from "@/lib/posts";
+import { SearchItem } from "@/types";
+
+const searchIndex: SearchItem[] = getAllPosts().map(({ slug, frontmatter }) => ({
+  slug,
+  title: frontmatter.title,
+  summary: frontmatter.summary ?? "",
+  category: frontmatter.category,
+  tags: frontmatter.tags ?? [],
+  date: frontmatter.date,
+}));
 
 const serif = Instrument_Serif({
   variable: "--font-serif",
@@ -68,8 +78,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <NextTopLoader color="#2563eb" showSpinner={false} height={3} />
-          <ReadingProgress />
-          <Navbar />
+          <Navbar searchIndex={searchIndex} />
           <main className="flex-1">
             {children}
           </main>
