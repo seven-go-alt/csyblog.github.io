@@ -6,6 +6,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ReadingProgress } from "@/components/ui/ReadingProgress";
+import { SITE, getSiteUrl } from "@/lib/site";
 
 const serif = Instrument_Serif({
   variable: "--font-serif",
@@ -24,23 +25,24 @@ const mono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: {
-    default: "CSY Blog",
-    template: "%s | CSY Blog",
+    default: SITE.name,
+    template: `%s | ${SITE.name}`,
   },
-  description: "Personal blog of CSY, sharing programming, tech, and life.",
+  description: SITE.description,
   openGraph: {
-    title: "CSY Blog",
-    description: "Personal blog of CSY, sharing programming, tech, and life.",
-    url: "https://csyblog.github.io",
-    siteName: "CSY Blog",
+    title: SITE.name,
+    description: SITE.description,
+    url: "/",
+    siteName: SITE.name,
     locale: "zh_CN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CSY Blog",
-    description: "Personal blog of CSY, sharing programming, tech, and life.",
+    title: SITE.name,
+    description: SITE.description,
   },
 };
 

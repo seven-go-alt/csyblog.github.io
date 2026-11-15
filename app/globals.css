@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* next-themes toggles a `.dark` class on <html>; without this, Tailwind v4
+   compiles `dark:` utilities against `prefers-color-scheme` instead. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-subtle: var(--bg-subtle);

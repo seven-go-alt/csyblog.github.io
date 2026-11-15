@@ -13,12 +13,3 @@ export interface Post {
   frontmatter: PostFrontmatter;
   content: string;
 }
-
-export interface Comment {
-  id: string;
-  post_slug: string;
-  author_name: string;
-  content: string;
-  created_at: string;
-  is_approved: boolean;
-}

@@ -3,23 +3,10 @@ import { codeToHtml } from 'shiki';
 import { Callout } from '@/components/mdx/Callout';
 import { CopyButton } from '@/components/mdx/CopyButton';
 
-const slugify = (text: string) => {
-  if (!text) return Math.random().toString(36).substring(2, 9);
-  return text.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-};
-
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
     Callout,
-    h2: ({ children, ...props }) => {
-      const text = Array.isArray(children) ? children.join('') : children?.toString() || '';
-      return <h2 id={slugify(text)} {...props}>{children}</h2>;
-    },
-    h3: ({ children, ...props }) => {
-      const text = Array.isArray(children) ? children.join('') : children?.toString() || '';
-      return <h3 id={slugify(text)} {...props}>{children}</h3>;
-    },
     pre: async ({ children, ...props }: any) => {
       try {
         const codeElement = children;

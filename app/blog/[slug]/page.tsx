@@ -1,12 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { getPostBySlug, getAllPosts } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import { Tag } from "@/components/ui/Tag";
-
-const CommentSection = dynamic(() => import("@/components/blog/CommentSection"));
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -93,10 +91,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <main className="flex-1 w-full min-w-0 flex flex-col items-center">
             <div className="w-full max-w-[720px]">
               <article className="prose dark:prose-invert prose-blue max-w-none mdx-content w-full prose-headings:scroll-mt-24">
-                {/* Hide YAML frontmatter that MDX renders as hr + heading due to Turbopack not supporting remark-frontmatter */}
-                <div className="[&>hr:first-child]:hidden [&>hr:first-child+h1]:hidden [&>hr:first-child+h2]:hidden [&>hr:first-child+p]:hidden">
-                  <PostContent />
-                </div>
+                <PostContent />
               </article>
               
               <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -118,8 +113,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   </Link>
                 ) : <div />}
               </div>
-
-              <CommentSection slug={slug} />
             </div>
           </main>
           

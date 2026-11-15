@@ -18,7 +18,13 @@ const nextConfig: NextConfig = {
   },
 };
 
-const withMDX = createMDX({});
+const withMDX = createMDX({
+  // Plugin names are passed as strings so they work with Turbopack.
+  options: {
+    remarkPlugins: ["remark-frontmatter"],
+    rehypePlugins: ["rehype-slug"],
+  },
+});
 
 export default withMDX(nextConfig);
 

@@ -2,7 +2,7 @@ import { getAllPosts } from "@/lib/posts";
 import { PostList } from "@/components/blog/PostList";
 import Link from "next/link";
 
-export const metadata = { title: "文章 - CSY Blog" };
+export const metadata = { title: "文章归档" };
 
 export default async function BlogPage({
   searchParams,
