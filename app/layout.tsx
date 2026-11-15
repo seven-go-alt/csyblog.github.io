@@ -22,11 +22,15 @@ const serif = Instrument_Serif({
   variable: "--font-serif",
   subsets: ["latin"],
   weight: "400",
+  // Instrument Serif has no CJK glyphs; keep Chinese headings on a real serif
+  // instead of falling back to the metric-adjusted sans face.
+  fallback: ["Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", "serif"],
 });
 
 const sans = Geist({
   variable: "--font-sans",
   subsets: ["latin"],
+  fallback: ["PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "sans-serif"],
 });
 
 const mono = Geist_Mono({
