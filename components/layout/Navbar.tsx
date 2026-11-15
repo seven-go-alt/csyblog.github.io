@@ -9,9 +9,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/blog", label: "Blog" },
-  { href: "/about", label: "About" },
+  { href: "/", label: "首页" },
+  { href: "/blog", label: "文章" },
+  { href: "/about", label: "关于" },
 ];
 
 export function Navbar() {

@@ -54,7 +54,7 @@ export function SearchModal() {
                   <input 
                     autoFocus
                     type="text" 
-                    placeholder="Search docs, posts, tags... (Coming Soon)"
+                    placeholder="搜索文章或标签（功能开发中）"
                     className="flex-1 bg-transparent border-none outline-none px-4 text-gray-900 dark:text-gray-100 placeholder-gray-400"
                   />
                   <button onClick={() => setIsOpen(false)} className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-400 transition-colors">

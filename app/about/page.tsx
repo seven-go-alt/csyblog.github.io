@@ -1,4 +1,4 @@
-export const metadata = { title: "About - CSY Blog" };
+export const metadata = { title: "关于 - CSY Blog" };
 
 export default function AboutPage() {
   return (

@@ -11,7 +11,7 @@ export function PostCard({ post }: { post: Post }) {
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-transparent group-hover:bg-blue-500 transition-colors" />
       
       <div className="flex flex-wrap items-center gap-3">
-        <CategoryBadge category={post.frontmatter.category || "Uncategorized"} />
+        <CategoryBadge category={post.frontmatter.category || "未分类"} />
         <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
           <time dateTime={post.frontmatter.date}>
             {new Date(post.frontmatter.date).toLocaleDateString("zh-CN", {
@@ -21,7 +21,7 @@ export function PostCard({ post }: { post: Post }) {
           <span>•</span>
           <span className="flex items-center gap-1">
             <Clock className="w-3.5 h-3.5" />
-            {(post.frontmatter.summary?.length || 100) > 100 ? "4 min read" : "2 min read"}
+            {(post.frontmatter.summary?.length || 100) > 100 ? "阅读约 4 分钟" : "阅读约 2 分钟"}
           </span>
         </div>
       </div>

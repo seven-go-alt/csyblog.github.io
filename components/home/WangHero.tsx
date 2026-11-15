@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 // List of poetic phrases for the typewriter effect
 const HERO_PHRASES = [
@@ -265,7 +266,7 @@ export function WangHero() {
         {/* Foreground Content */}
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <motion.h1
-            className="text-4xl md:text-5xl font-bold tracking-wider mb-6"
+            className="text-4xl md:text-5xl font-bold tracking-wider mb-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -279,6 +280,22 @@ export function WangHero() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <TypewriterEffect />
+          </motion.div>
+          <motion.div
+            className="mt-8 flex flex-col items-center gap-5"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <p className="text-sm md:text-base text-white/75 tracking-wide">
+              关注 AI、硬件与工程实践
+            </p>
+            <Link
+              href="/blog"
+              className="rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-[#1a0b2e]"
+            >
+              浏览文章
+            </Link>
           </motion.div>
         </div>
 

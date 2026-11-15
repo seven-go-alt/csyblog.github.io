@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Github, Twitter, Mail } from "lucide-react";
 
-export function Sidebar({ postsCount }: { postsCount: number }) {
+export function Sidebar({ postsCount, tagsCount }: { postsCount: number; tagsCount: number }) {
   const siteConfig = {
     author: {
       name: "爱发呆的菜菜",
       avatar: "https://avatars.githubusercontent.com/caisiying",
-      email: "hello@example.com"
+      email: "csypeal@gmail.com"
     },
-    description: "Web Developer & Open Source Enthusiast",
+    description: "前端开发者 · 开源爱好者",
     links: {
       github: "https://github.com/caisiying",
       twitter: "https://twitter.com/csyblog"
@@ -38,7 +38,7 @@ export function Sidebar({ postsCount }: { postsCount: number }) {
           </div>
           <div className="flex flex-col items-center">
             <span className="font-semibold text-fg">标签</span>
-            <span className="text-fg-muted">4</span>
+            <span className="text-fg-muted">{tagsCount}</span>
           </div>
         </div>
 

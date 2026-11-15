@@ -18,14 +18,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
-  if (!post) return { title: "Not Found" };
+  if (!post) return { title: "文章未找到" };
   
   return { 
     title: post.frontmatter.title,
-    description: post.frontmatter.summary || `Read ${post.frontmatter.title} on CSY Blog.`,
+    description: post.frontmatter.summary || `在 CSY Blog 阅读《${post.frontmatter.title}》。`,
     openGraph: {
       title: post.frontmatter.title,
-      description: post.frontmatter.summary || `Read ${post.frontmatter.title} on CSY Blog.`,
+      description: post.frontmatter.summary || `在 CSY Blog 阅读《${post.frontmatter.title}》。`,
       type: 'article',
       publishedTime: post.frontmatter.date,
       tags: post.frontmatter.tags,

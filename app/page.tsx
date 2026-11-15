@@ -5,22 +5,8 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { RibbonBackground } from "@/components/home/RibbonBackground";
 
 export default function Home() {
-  let originalPosts = getAllPosts();
-  
-  // Create a populated mock array to demonstrate the layout if few posts exist
-  let posts = [...originalPosts];
-  if (posts.length > 0 && posts.length < 5) {
-    const mockCategories = ["前端", "后端", "随笔", "思考", "生活"];
-    while (posts.length < 8) {
-      posts = [...posts, ...originalPosts].map((p, i) => ({
-        ...p, 
-        slug: i < originalPosts.length ? p.slug : `${p.slug}-copy-${i}`,
-        frontmatter: i < originalPosts.length 
-          ? p.frontmatter 
-          : { ...p.frontmatter, title: `${p.frontmatter.title} (${i})`, category: mockCategories[i % mockCategories.length] }
-      }));
-    }
-  }
+  const posts = getAllPosts();
+  const tagsCount = new Set(posts.flatMap((post) => post.frontmatter.tags ?? [])).size;
 
   return (
     <div className="min-h-screen transition-colors duration-300">
@@ -40,16 +26,10 @@ export default function Home() {
               <PostCard key={post.slug} post={post} index={idx} />
             ))}
 
-            {/* Pagination Placeholder (WangwangIT style) */}
-            <div className="pt-8 pb-12 flex justify-center">
-              <button className="px-6 py-2.5 rounded-full bg-white dark:bg-[#121212] shadow-sm hover:shadow-md text-fg-muted hover:text-accent transition-all">
-                加载更多文章
-              </button>
-            </div>
           </main>
 
           {/* Right Column: Sticky Sidebar */}
-          <Sidebar postsCount={posts.length} />
+          <Sidebar postsCount={posts.length} tagsCount={tagsCount} />
         </div>
       </div>
     </div>

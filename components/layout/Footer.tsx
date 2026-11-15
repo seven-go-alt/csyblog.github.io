@@ -16,7 +16,7 @@ export function Footer() {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-sm text-gray-500 dark:text-gray-400">
-          © {currentYear} CSY. All rights reserved.
+          © {currentYear} CSY. 保留所有权利。
         </div>
         
         <div className="flex items-center gap-5">
@@ -28,7 +28,7 @@ export function Footer() {
             <span className="sr-only">Twitter</span>
             <Twitter className="w-5 h-5" />
           </a>
-          <a href="mailto:contact@example.com" className="text-gray-400 hover:text-red-500 transition-colors p-2 -m-2">
+          <a href="mailto:csypeal@gmail.com" className="text-gray-400 hover:text-red-500 transition-colors p-2 -m-2">
             <span className="sr-only">Email</span>
             <Mail className="w-5 h-5" />
           </a>
