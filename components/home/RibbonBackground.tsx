@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useHydrated } from "@/lib/use-hydrated";
 
 export function RibbonBackground() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useHydrated();
   
   // Track the vertical scroll progress of the entire page
   const { scrollYProgress } = useScroll();
@@ -13,10 +13,6 @@ export function RibbonBackground() {
   // The element is 150vh tall, shifting from -10% to 50% moves it a massive 90vh
   // downwards over the course of the scroll, breaking any 'fixed' feeling.
   const yParallax = useTransform(scrollYProgress, [0, 1], ["-10%", "50%"]);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   if (!mounted) return null;
 

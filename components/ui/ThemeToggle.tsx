@@ -1,21 +1,19 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useHydrated } from "@/lib/use-hydrated";
 import { motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 
 export function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
-
-  useEffect(() => setMounted(true), []);
+  const mounted = useHydrated();
+  const { resolvedTheme, setTheme } = useTheme();
 
   if (!mounted) {
     return <div className="w-9 h-9" />; // Placeholder to avoid layout shift
   }
 
-  const isDark = theme === "dark";
+  const isDark = resolvedTheme === "dark";
 
   return (
     <button

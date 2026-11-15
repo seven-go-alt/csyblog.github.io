@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useHydrated } from "@/lib/use-hydrated";
 import Link from "next/link";
 
 // List of poetic phrases for the typewriter effect
@@ -68,17 +69,20 @@ const generateStars = (count: number) => {
 };
 
 function StarryBackground() {
-  const [stars, setStars] = useState({ small: "", medium: "", large: "" });
+  const hydrated = useHydrated();
+  const stars = useMemo(
+    () =>
+      hydrated
+        ? {
+            small: generateStars(300),
+            medium: generateStars(150),
+            large: generateStars(50),
+          }
+        : null,
+    [hydrated],
+  );
 
-  useEffect(() => {
-    setStars({
-      small: generateStars(300),
-      medium: generateStars(150),
-      large: generateStars(50),
-    });
-  }, []);
-
-  if (!stars.small) return null; // Wait for client render
+  if (!stars) return null; // Wait for client render
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">

@@ -8,6 +8,7 @@ import { TableOfContents } from "@/components/blog/TableOfContents";
 import { Tag } from "@/components/ui/Tag";
 import { ReadingProgress } from "@/components/ui/ReadingProgress";
 import { postJsonLd, serializeJsonLd } from "@/lib/seo";
+import { extractHeadings } from "@/lib/toc";
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -61,6 +62,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   // Next.js allows dynamic imports for MDX inside the app router.
   const PostContent = dynamic(() => import(`@/content/posts/${slug}.mdx`).catch(() => notFound()));
+
+  const headings = extractHeadings(post.content);
 
   const prevPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
   const nextPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
@@ -139,7 +142,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
           
           <aside className="w-full lg:w-64 shrink-0 hidden lg:block sticky top-24">
-            <TableOfContents />
+            <TableOfContents headings={headings} />
           </aside>
         </div>
       </div>
