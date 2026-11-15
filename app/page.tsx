@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { WangHero } from "@/components/home/WangHero";
-import { PostCard } from "@/components/home/PostCard";
+import { PostCard } from "@/components/blog/PostCard";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { RibbonBackground } from "@/components/home/RibbonBackground";
 
@@ -28,7 +28,7 @@ export default function Home() {
           {/* Left Column: Post Feed */}
           <main className="flex-1 space-y-8 min-w-0">
             {posts.map((post, idx) => (
-              <PostCard key={post.slug} post={post} index={idx} />
+              <PostCard key={post.slug} post={post} index={idx} variant="feature" />
             ))}
 
           </main>

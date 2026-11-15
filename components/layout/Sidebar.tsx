@@ -61,8 +61,14 @@ export function Sidebar({ postsCount, tagsCount }: { postsCount: number; tagsCou
           <span>📢</span> 公告
         </h4>
         <p className="text-sm text-fg-muted leading-relaxed">
-          欢迎来到我的博客！这里记录了我在技术探索道路上的点点滴滴。目前正在重构基于 WangwangIT 风格的全新视觉。
+          这里记录我在 AI、硬件与工程实践上的观察和笔记，内容会持续更新。
         </p>
+        <a
+          href="/feed.xml"
+          className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-accent hover:underline"
+        >
+          RSS 订阅
+        </a>
       </div>
     </aside>
   );
